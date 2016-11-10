@@ -6,7 +6,11 @@
 
 # Find config file
 
-CONF_FILE=syncd.conf
+if [ $SYNCD_CONF_FILE ]; then
+  CONF_FILE=$SYNCD_CONF_FILE
+else
+  CONF_FILE=syncd.conf
+fi
 
 while [ ! -e $CONF_FILE ]; do
   if [ $PWD = "/" ]; then
