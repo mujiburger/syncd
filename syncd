@@ -37,7 +37,15 @@ if [ $SSH_HOST ]; then
   SSH_INFO="${SSH_INFO}${SSH_HOST}:"
 fi
 
-COMMAND="rsync ${RSYNC_OPTIONS} ${RSYNC_EXCLUDE} --delete ${WATCH_DIR}/ ${SSH_INFO}${REMOTE_TARGET_DIR}/"
+if [ $RSYNC_EXCLUDE ]; then
+  RSYNC_EXCLUDE="--exclude ${RSYNC_EXCLUDE}"
+fi
+
+if [ $RSYNC_EXCLUDE_FROM ]; then
+  RSYNC_EXCLUDE_FROM="--exclude-from ${RSYNC_EXCLUDE}"
+fi
+
+COMMAND="rsync ${RSYNC_OPTIONS} ${RSYNC_EXCLUDE} ${RSYNC_EXCLUDE_FROM} --delete ${WATCH_DIR}/ ${SSH_INFO}${REMOTE_TARGET_DIR}/"
 
 case $1 in
     start)
